@@ -1,0 +1,23 @@
+/* A program demonstrating loops and nested conditionals */
+
+main
+begin
+    variable x : int;
+    variable y : int;
+
+    x := 0;
+    y := 10;
+
+    while (y > 0)
+    begin
+        if (x % 2 = 0)
+        begin
+            x := x + 1;
+        end
+        else
+        begin
+            x := x * 2;
+        end
+        y := y - 1;
+    end
+end
