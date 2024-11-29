@@ -1,67 +1,30 @@
-/*
-Autumn 2024 CSC1098 Compiler Construction
-Assignment 1: A Lexical and Syntax Analyser
-By Fiachra Gill - 21444356
-*/
-
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class CAL {
     public static void main(String[] args) throws Exception {
-        // Input file or standard input
-        String inputFile = args.length > 0 ? args[0] : null;
-        InputStream stream = (inputFile != null) ? new FileInputStream(inputFile) : System.in;
+        // Determine input file
+        String inputFile = args.length > 0 ? args[0] : "examples/example.cal";
+        InputStream is = new FileInputStream(inputFile);
 
-        // Initialize the lexer
-        CALLexer lexer = new CALLexer(CharStreams.fromStream(stream));
-        lexer.removeErrorListeners();
-        lexer.addErrorListener(new BaseErrorListener() {
-            @Override
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-                System.out.println(inputFile + " has not parsed");
-                System.exit(1); // Exit on lexing error
-            }
-        });
-
-        // Initialize the token stream and parser
+        // Set up ANTLR
+        CharStream input = CharStreams.fromStream(is);
+        CALLexer lexer = new CALLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         CALParser parser = new CALParser(tokens);
-        parser.removeErrorListeners();
-        parser.addErrorListener(new BaseErrorListener() {
-            @Override
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-                System.out.println(inputFile + " has not parsed");
-                System.exit(1); // Exit on parsing error
-            }
-        });
 
-        // Parse the input starting from the 'prog' rule
+        // Parse the input file
         ParseTree tree = parser.program();
+        System.out.println(tree.toStringTree(parser)); // Print the parse tree for debugging
 
-        // Step 1: Print the Parse Tree
-        System.out.println("Parse Tree:");
-        System.out.println(tree.toStringTree(parser));
+        // Use the visitor to generate TAC
+        TACGeneratorVisitor visitor = new TACGeneratorVisitor();
+        visitor.visit(tree);
 
-        // Step 2: Perform Semantic Analysis
-        System.out.println("Performing Semantic Analysis...");
-        ParseTreeWalker walker = new ParseTreeWalker();
-        SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer();
-        walker.walk(semanticAnalyzer, tree);
-
-        // Step 3: Generate Intermediate Representation (IR)
-        System.out.println("Generating Intermediate Representation...");
-        String irFilename = inputFile != null ? inputFile.replace(".cal", ".ir") : "output.ir";
-        semanticAnalyzer.getTACGenerator().writeToFile(irFilename);
-
-        System.out.println("Intermediate Representation saved to: " + irFilename);
-
-        // Indicate successful parsing
-        System.out.println(inputFile + " parsed successfully");
+        // Write the generated TAC to a file
+        visitor.getTACGenerator().writeToFile("examples/example.ir");
+        System.out.println("TAC generated in examples/example.ir");
     }
 }
+

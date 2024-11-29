@@ -1,23 +1,14 @@
-/* A program demonstrating loops and nested conditionals */
+integer test_fn (x: integer) is
+variable p : integer;
+begin
+	p := 2;
+	return (p) ;
+end
 
 main
 begin
-    variable x : int;
-    variable y : int;
-
-    x := 0;
-    y := 10;
-
-    while (y > 0)
-    begin
-        if (x % 2 = 0)
-        begin
-            x := x + 1;
-        end
-        else
-        begin
-            x := x * 2;
-        end
-        y := y - 1;
-    end
+	variable i : integer;
+ 	variable x : integer;
+	i := x;
+	x := test_fn(i);
 end

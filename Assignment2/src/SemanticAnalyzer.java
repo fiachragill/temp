@@ -1,128 +1,104 @@
-import java.util.*;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SemanticAnalyzer extends CALBaseListener {
-    private SymbolTable symbolTable = new SymbolTable();
-    private TACGenerator tacGenerator = new TACGenerator();
-    private int labelCounter = 0;
+    private final TACGenerator tacGenerator = new TACGenerator();
+    private final Map<String, String> symbolTable = new HashMap<>();
+    private String currentFunction = "";
 
-    private String newLabel() {
-        return "L" + (labelCounter++);
+    public TACGenerator getTACGenerator() {
+        return tacGenerator;
     }
 
     @Override
-    public void enterProgram(CALParser.ProgramContext ctx) {
-        System.out.println("Entering program...");
+    public void enterFunction_decl(CALParser.Function_declContext ctx) {
+        currentFunction = ctx.ID().getText();
+        System.out.println("DEBUG: Entering function: " + currentFunction);
+        tacGenerator.addInstruction(currentFunction + ":");
     }
 
     @Override
-    public void exitProgram(CALParser.ProgramContext ctx) {
-        System.out.println("Exiting program...");
-        tacGenerator.addInstruction("// End of program");
-        tacGenerator.optimize(); // Optimize before generating the final output
+    public void exitFunction_decl(CALParser.Function_declContext ctx) {
+        System.out.println("DEBUG: Exiting function: " + currentFunction);
+        currentFunction = "";
     }
 
     @Override
-    public void enterConst_decl(CALParser.Const_declContext ctx) {
-        String name = ctx.ID().getText();
-        String expr = ctx.expr().getText();
+    public void enterMain_block(CALParser.Main_blockContext ctx) {
+        currentFunction = "main";
+        System.out.println("DEBUG: Entering main block");
+        tacGenerator.addInstruction(currentFunction + ":");
+    }
 
-        if (!symbolTable.addSymbol(name, "const")) {
-            System.err.println("Semantic Error: Duplicate constant '" + name + "' declared.");
-        } else {
-            String temp = tacGenerator.newTemp();
-            tacGenerator.addInstruction(temp + " = " + expr);
-            tacGenerator.addInstruction(name + " = " + temp);
-        }
+    @Override
+    public void exitMain_block(CALParser.Main_blockContext ctx) {
+        System.out.println("DEBUG: Exiting main block");
+        tacGenerator.addInstruction("  call _exit, 0");
+        currentFunction = "";
     }
 
     @Override
     public void enterVar_decl(CALParser.Var_declContext ctx) {
-        String name = ctx.ID().getText();
+        String id = ctx.ID().getText();
         String type = ctx.type().getText();
-
-        if (!symbolTable.addSymbol(name, type)) {
-            System.err.println("Semantic Error: Duplicate variable '" + name + "' declared.");
-        } else {
-            tacGenerator.addInstruction("declare " + name + " : " + type);
-        }
+        System.out.println("DEBUG: Declaring variable: " + id + " of type " + type);
+        symbolTable.put(id, type);
     }
 
     @Override
-    public void enterAssign(CALParser.AssignContext ctx) {
-        String name = ctx.ID().getText();
-        String expr = ctx.expr().getText();
-
-        if (!symbolTable.contains(name)) {
-            System.err.println("Semantic Error: Variable '" + name + "' is not declared.");
-        } else {
-            String temp = tacGenerator.newTemp();
-            tacGenerator.addInstruction(temp + " = " + expr);
-            tacGenerator.addInstruction(name + " = " + temp);
-        }
+    public void enterAssign_stmt(CALParser.Assign_stmtContext ctx) {
+        String id = ctx.ID().getText();
+        String value = evaluateExpression(ctx.expr());
+        System.out.println("DEBUG: Assigning " + value + " to " + id);
+        tacGenerator.addInstruction("  " + id + " = " + value);
     }
 
     @Override
-    public void enterStatement(CALParser.StatementContext ctx) {
-        if (ctx.While() != null) {
-            handleWhileStatement(ctx);
-        } else if (ctx.If() != null) {
-            handleIfStatement(ctx);
-        } else if (ctx.Skip() != null) {
-            tacGenerator.addInstruction("// skip");
-        }
-    }
+    public void enterFunc_call_stmt(CALParser.Func_call_stmtContext ctx) {
+        String resultVar = ctx.ID(0).getText();
+        String funcName = ctx.ID(1).getText();
+        int argCount = ctx.arg_list() != null ? ctx.arg_list().expr().size() : 0;
 
-    private void handleWhileStatement(CALParser.StatementContext ctx) {
-        String startLabel = newLabel();
-        String conditionLabel = newLabel();
-        String endLabel = newLabel();
-
-        tacGenerator.addInstruction(startLabel + ":");
-        String temp = tacGenerator.newTemp();
-        tacGenerator.addInstruction(temp + " = " + ctx.condition().getText());
-        tacGenerator.addInstruction("if " + temp + " goto " + conditionLabel);
-        tacGenerator.addInstruction("goto " + endLabel);
-
-        tacGenerator.addInstruction(conditionLabel + ":");
-        for (CALParser.Statement_blockContext block : ctx.statement_block()) {
-            handleStatementBlock(block);
-        }
-        tacGenerator.addInstruction("goto " + startLabel);
-        tacGenerator.addInstruction(endLabel + ":");
-    }
-
-    private void handleIfStatement(CALParser.StatementContext ctx) {
-        String conditionTemp = tacGenerator.newTemp();
-        String trueLabel = newLabel();
-        String falseLabel = newLabel();
-        String endLabel = newLabel();
-
-        tacGenerator.addInstruction(conditionTemp + " = " + ctx.condition().getText());
-        tacGenerator.addInstruction("if " + conditionTemp + " goto " + trueLabel);
-        tacGenerator.addInstruction("goto " + falseLabel);
-
-        tacGenerator.addInstruction(trueLabel + ":");
-        if (!ctx.statement_block().isEmpty()) {
-            handleStatementBlock(ctx.statement_block(0));
-        }
-        tacGenerator.addInstruction("goto " + endLabel);
-
-        tacGenerator.addInstruction(falseLabel + ":");
-        if (ctx.statement_block().size() > 1) {
-            handleStatementBlock(ctx.statement_block(1));
-        }
-        tacGenerator.addInstruction(endLabel + ":");
-    }
-
-    private void handleStatementBlock(CALParser.Statement_blockContext ctx) {
-        if (ctx != null) {
-            for (CALParser.StatementContext stmtCtx : ctx.statement()) {
-                enterStatement(stmtCtx);
+        System.out.println("DEBUG: Function call: " + funcName + " with " + argCount + " arguments");
+        if (ctx.arg_list() != null) {
+            for (CALParser.ExprContext exprCtx : ctx.arg_list().expr()) {
+                String arg = evaluateExpression(exprCtx);
+                System.out.println("DEBUG: Passing argument: " + arg);
+                tacGenerator.addInstruction("  param " + arg);
             }
         }
+        tacGenerator.addInstruction("  " + resultVar + " = call " + funcName + ", " + argCount);
     }
 
-    public TACGenerator getTACGenerator() {
-        return tacGenerator;
+    @Override
+    public void enterStmt_list(CALParser.Stmt_listContext ctx) {
+        System.out.println("DEBUG: Traversing statement list in function: " + currentFunction);
+        for (var stmt : ctx.stmt()) {
+            System.out.println("DEBUG: Found statement: " + stmt.getText());
+        }
+    }
+
+    @Override
+    public void enterReturn_stmt(CALParser.Return_stmtContext ctx) {
+        String value = evaluateExpression(ctx.expr());
+        System.out.println("DEBUG: Processing RETURN statement with value: " + value + " in function: " + currentFunction);
+        tacGenerator.addInstruction("  return " + value);
+    }
+
+    private String evaluateExpression(CALParser.ExprContext ctx) {
+        if (ctx.NUMBER() != null) {
+            return ctx.NUMBER().getText();
+        } else if (ctx.ID() != null) {
+            return ctx.ID().getText();
+        } else if (ctx.expr().size() == 1) {
+            return evaluateExpression(ctx.expr(0));
+        } else if (ctx.expr().size() == 2) {
+            String left = evaluateExpression(ctx.expr(0));
+            String right = evaluateExpression(ctx.expr(1));
+            String op = ctx.getChild(1).getText();
+            return left + " " + op + " " + right;
+        }
+        return "";
     }
 }

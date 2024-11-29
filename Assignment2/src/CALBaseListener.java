@@ -1,4 +1,4 @@
-// Generated from ./src/CAL.g4 by ANTLR 4.7.1
+// Generated from src/CAL.g4 by ANTLR 4.7.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -27,73 +27,25 @@ public class CALBaseListener implements CALListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDecl_list(CALParser.Decl_listContext ctx) { }
+	@Override public void enterFunction_decl(CALParser.Function_declContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDecl_list(CALParser.Decl_listContext ctx) { }
+	@Override public void exitFunction_decl(CALParser.Function_declContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDecl(CALParser.DeclContext ctx) { }
+	@Override public void enterMain_block(CALParser.Main_blockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDecl(CALParser.DeclContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterVar_decl(CALParser.Var_declContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVar_decl(CALParser.Var_declContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterConst_decl(CALParser.Const_declContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitConst_decl(CALParser.Const_declContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFunction_list(CALParser.Function_listContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFunction_list(CALParser.Function_listContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFunction(CALParser.FunctionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFunction(CALParser.FunctionContext ctx) { }
+	@Override public void exitMain_block(CALParser.Main_blockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -111,109 +63,109 @@ public class CALBaseListener implements CALListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterParameter_list(CALParser.Parameter_listContext ctx) { }
+	@Override public void enterParam_list(CALParser.Param_listContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitParameter_list(CALParser.Parameter_listContext ctx) { }
+	@Override public void exitParam_list(CALParser.Param_listContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNemp_parameter_list(CALParser.Nemp_parameter_listContext ctx) { }
+	@Override public void enterParam(CALParser.ParamContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNemp_parameter_list(CALParser.Nemp_parameter_listContext ctx) { }
+	@Override public void exitParam(CALParser.ParamContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMain(CALParser.MainContext ctx) { }
+	@Override public void enterDecl_list(CALParser.Decl_listContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMain(CALParser.MainContext ctx) { }
+	@Override public void exitDecl_list(CALParser.Decl_listContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStatement_block(CALParser.Statement_blockContext ctx) { }
+	@Override public void enterVar_decl(CALParser.Var_declContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStatement_block(CALParser.Statement_blockContext ctx) { }
+	@Override public void exitVar_decl(CALParser.Var_declContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStatement(CALParser.StatementContext ctx) { }
+	@Override public void enterStmt_list(CALParser.Stmt_listContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStatement(CALParser.StatementContext ctx) { }
+	@Override public void exitStmt_list(CALParser.Stmt_listContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterAssign(CALParser.AssignContext ctx) { }
+	@Override public void enterStmt(CALParser.StmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitAssign(CALParser.AssignContext ctx) { }
+	@Override public void exitStmt(CALParser.StmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr(CALParser.ExprContext ctx) { }
+	@Override public void enterBlock(CALParser.BlockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpr(CALParser.ExprContext ctx) { }
+	@Override public void exitBlock(CALParser.BlockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBinary_arith_op(CALParser.Binary_arith_opContext ctx) { }
+	@Override public void enterIf_stmt(CALParser.If_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBinary_arith_op(CALParser.Binary_arith_opContext ctx) { }
+	@Override public void exitIf_stmt(CALParser.If_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFrag(CALParser.FragContext ctx) { }
+	@Override public void enterWhile_stmt(CALParser.While_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFrag(CALParser.FragContext ctx) { }
+	@Override public void exitWhile_stmt(CALParser.While_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -231,13 +183,49 @@ public class CALBaseListener implements CALListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComp_op(CALParser.Comp_opContext ctx) { }
+	@Override public void enterRel_op(CALParser.Rel_opContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComp_op(CALParser.Comp_opContext ctx) { }
+	@Override public void exitRel_op(CALParser.Rel_opContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAssign_stmt(CALParser.Assign_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssign_stmt(CALParser.Assign_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunc_call_stmt(CALParser.Func_call_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunc_call_stmt(CALParser.Func_call_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterReturn_stmt(CALParser.Return_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitReturn_stmt(CALParser.Return_stmtContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -255,13 +243,13 @@ public class CALBaseListener implements CALListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNemp_arg_list(CALParser.Nemp_arg_listContext ctx) { }
+	@Override public void enterExpr(CALParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNemp_arg_list(CALParser.Nemp_arg_listContext ctx) { }
+	@Override public void exitExpr(CALParser.ExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

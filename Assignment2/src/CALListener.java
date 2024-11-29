@@ -1,4 +1,4 @@
-// Generated from ./src/CAL.g4 by ANTLR 4.7.1
+// Generated from src/CAL.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -17,65 +17,25 @@ public interface CALListener extends ParseTreeListener {
 	 */
 	void exitProgram(CALParser.ProgramContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#decl_list}.
+	 * Enter a parse tree produced by {@link CALParser#function_decl}.
 	 * @param ctx the parse tree
 	 */
-	void enterDecl_list(CALParser.Decl_listContext ctx);
+	void enterFunction_decl(CALParser.Function_declContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#decl_list}.
+	 * Exit a parse tree produced by {@link CALParser#function_decl}.
 	 * @param ctx the parse tree
 	 */
-	void exitDecl_list(CALParser.Decl_listContext ctx);
+	void exitFunction_decl(CALParser.Function_declContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#decl}.
+	 * Enter a parse tree produced by {@link CALParser#main_block}.
 	 * @param ctx the parse tree
 	 */
-	void enterDecl(CALParser.DeclContext ctx);
+	void enterMain_block(CALParser.Main_blockContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#decl}.
+	 * Exit a parse tree produced by {@link CALParser#main_block}.
 	 * @param ctx the parse tree
 	 */
-	void exitDecl(CALParser.DeclContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CALParser#var_decl}.
-	 * @param ctx the parse tree
-	 */
-	void enterVar_decl(CALParser.Var_declContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CALParser#var_decl}.
-	 * @param ctx the parse tree
-	 */
-	void exitVar_decl(CALParser.Var_declContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CALParser#const_decl}.
-	 * @param ctx the parse tree
-	 */
-	void enterConst_decl(CALParser.Const_declContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CALParser#const_decl}.
-	 * @param ctx the parse tree
-	 */
-	void exitConst_decl(CALParser.Const_declContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CALParser#function_list}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunction_list(CALParser.Function_listContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CALParser#function_list}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunction_list(CALParser.Function_listContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CALParser#function}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunction(CALParser.FunctionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CALParser#function}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunction(CALParser.FunctionContext ctx);
+	void exitMain_block(CALParser.Main_blockContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CALParser#type}.
 	 * @param ctx the parse tree
@@ -87,95 +47,95 @@ public interface CALListener extends ParseTreeListener {
 	 */
 	void exitType(CALParser.TypeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#parameter_list}.
+	 * Enter a parse tree produced by {@link CALParser#param_list}.
 	 * @param ctx the parse tree
 	 */
-	void enterParameter_list(CALParser.Parameter_listContext ctx);
+	void enterParam_list(CALParser.Param_listContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#parameter_list}.
+	 * Exit a parse tree produced by {@link CALParser#param_list}.
 	 * @param ctx the parse tree
 	 */
-	void exitParameter_list(CALParser.Parameter_listContext ctx);
+	void exitParam_list(CALParser.Param_listContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#nemp_parameter_list}.
+	 * Enter a parse tree produced by {@link CALParser#param}.
 	 * @param ctx the parse tree
 	 */
-	void enterNemp_parameter_list(CALParser.Nemp_parameter_listContext ctx);
+	void enterParam(CALParser.ParamContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#nemp_parameter_list}.
+	 * Exit a parse tree produced by {@link CALParser#param}.
 	 * @param ctx the parse tree
 	 */
-	void exitNemp_parameter_list(CALParser.Nemp_parameter_listContext ctx);
+	void exitParam(CALParser.ParamContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#main}.
+	 * Enter a parse tree produced by {@link CALParser#decl_list}.
 	 * @param ctx the parse tree
 	 */
-	void enterMain(CALParser.MainContext ctx);
+	void enterDecl_list(CALParser.Decl_listContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#main}.
+	 * Exit a parse tree produced by {@link CALParser#decl_list}.
 	 * @param ctx the parse tree
 	 */
-	void exitMain(CALParser.MainContext ctx);
+	void exitDecl_list(CALParser.Decl_listContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#statement_block}.
+	 * Enter a parse tree produced by {@link CALParser#var_decl}.
 	 * @param ctx the parse tree
 	 */
-	void enterStatement_block(CALParser.Statement_blockContext ctx);
+	void enterVar_decl(CALParser.Var_declContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#statement_block}.
+	 * Exit a parse tree produced by {@link CALParser#var_decl}.
 	 * @param ctx the parse tree
 	 */
-	void exitStatement_block(CALParser.Statement_blockContext ctx);
+	void exitVar_decl(CALParser.Var_declContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#statement}.
+	 * Enter a parse tree produced by {@link CALParser#stmt_list}.
 	 * @param ctx the parse tree
 	 */
-	void enterStatement(CALParser.StatementContext ctx);
+	void enterStmt_list(CALParser.Stmt_listContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#statement}.
+	 * Exit a parse tree produced by {@link CALParser#stmt_list}.
 	 * @param ctx the parse tree
 	 */
-	void exitStatement(CALParser.StatementContext ctx);
+	void exitStmt_list(CALParser.Stmt_listContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#assign}.
+	 * Enter a parse tree produced by {@link CALParser#stmt}.
 	 * @param ctx the parse tree
 	 */
-	void enterAssign(CALParser.AssignContext ctx);
+	void enterStmt(CALParser.StmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#assign}.
+	 * Exit a parse tree produced by {@link CALParser#stmt}.
 	 * @param ctx the parse tree
 	 */
-	void exitAssign(CALParser.AssignContext ctx);
+	void exitStmt(CALParser.StmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#expr}.
+	 * Enter a parse tree produced by {@link CALParser#block}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr(CALParser.ExprContext ctx);
+	void enterBlock(CALParser.BlockContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#expr}.
+	 * Exit a parse tree produced by {@link CALParser#block}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr(CALParser.ExprContext ctx);
+	void exitBlock(CALParser.BlockContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#binary_arith_op}.
+	 * Enter a parse tree produced by {@link CALParser#if_stmt}.
 	 * @param ctx the parse tree
 	 */
-	void enterBinary_arith_op(CALParser.Binary_arith_opContext ctx);
+	void enterIf_stmt(CALParser.If_stmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#binary_arith_op}.
+	 * Exit a parse tree produced by {@link CALParser#if_stmt}.
 	 * @param ctx the parse tree
 	 */
-	void exitBinary_arith_op(CALParser.Binary_arith_opContext ctx);
+	void exitIf_stmt(CALParser.If_stmtContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#frag}.
+	 * Enter a parse tree produced by {@link CALParser#while_stmt}.
 	 * @param ctx the parse tree
 	 */
-	void enterFrag(CALParser.FragContext ctx);
+	void enterWhile_stmt(CALParser.While_stmtContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#frag}.
+	 * Exit a parse tree produced by {@link CALParser#while_stmt}.
 	 * @param ctx the parse tree
 	 */
-	void exitFrag(CALParser.FragContext ctx);
+	void exitWhile_stmt(CALParser.While_stmtContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CALParser#condition}.
 	 * @param ctx the parse tree
@@ -187,15 +147,45 @@ public interface CALListener extends ParseTreeListener {
 	 */
 	void exitCondition(CALParser.ConditionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#comp_op}.
+	 * Enter a parse tree produced by {@link CALParser#rel_op}.
 	 * @param ctx the parse tree
 	 */
-	void enterComp_op(CALParser.Comp_opContext ctx);
+	void enterRel_op(CALParser.Rel_opContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#comp_op}.
+	 * Exit a parse tree produced by {@link CALParser#rel_op}.
 	 * @param ctx the parse tree
 	 */
-	void exitComp_op(CALParser.Comp_opContext ctx);
+	void exitRel_op(CALParser.Rel_opContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CALParser#assign_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssign_stmt(CALParser.Assign_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CALParser#assign_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssign_stmt(CALParser.Assign_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CALParser#func_call_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunc_call_stmt(CALParser.Func_call_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CALParser#func_call_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunc_call_stmt(CALParser.Func_call_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CALParser#return_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturn_stmt(CALParser.Return_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CALParser#return_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturn_stmt(CALParser.Return_stmtContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CALParser#arg_list}.
 	 * @param ctx the parse tree
@@ -207,13 +197,13 @@ public interface CALListener extends ParseTreeListener {
 	 */
 	void exitArg_list(CALParser.Arg_listContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CALParser#nemp_arg_list}.
+	 * Enter a parse tree produced by {@link CALParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterNemp_arg_list(CALParser.Nemp_arg_listContext ctx);
+	void enterExpr(CALParser.ExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CALParser#nemp_arg_list}.
+	 * Exit a parse tree produced by {@link CALParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitNemp_arg_list(CALParser.Nemp_arg_listContext ctx);
+	void exitExpr(CALParser.ExprContext ctx);
 }

@@ -1,6 +1,5 @@
 grammar CAL;
 
-// Case-insensitive fragments for letters
 fragment A: 'a' | 'A';
 fragment B: 'b' | 'B';
 fragment C: 'c' | 'C';
@@ -28,115 +27,79 @@ fragment X: 'x' | 'X';
 fragment Y: 'y' | 'Y';
 fragment Z: 'z';
 
-// Keywords, symbols, and operators
-Variable: V A R I A B L E;
-Constant: C O N S T A N T;
-Return: R E T U R N;
-IntType: I N T | I N T E G E R;
-BoolType: B O O L | B O O L E A N;
-VoidType: V O I D;
-Main: M A I N;
-If: I F;
-Else: E L S E;
-True: T R U E;
-False: F A L S E;
-While: W H I L E;
-Begin: B E G I N;
-End: E N D;
-Is: I S;
-Skip: S K I P;
+RETURN: R E T U R N;
+MAIN: M A I N;
+VARIABLE: V A R I A B L E;
+IS: I S;
+BEGIN: B E G I N;
+END: E N D;
+INTEGER: I N T E G E R;
+VOID: V O I D;
+WHILE: W H I L E;
+IF: I F;
+ELSE: E L S E;
 
-// Symbols for operations and delimiters
-Assign: ':=';
-Plus: '+';
-Minus: '-';
-Neg: '~';
-Or: '|';
-And: '&';
-Equals: '=';
-NotEquals: '!=';
-Less: '<';
-LessOrEquals: '<=';
-Greater: '>';
-GreaterOrEquals: '>=';
-Comma: ',';
-Colon: ':';
-Semicolon: ';';
-LBR: '(';
-RBR: ')';
+ASSIGN: ':=';
+COLON: ':';
+SEMICOLON: ';';
+COMMA: ',';
+LPAREN: '(';
+RPAREN: ')';
 
-// Literals
-Number: ('-')? [1-9][0-9]* | '0';
-ID: [a-zA-Z] [a-zA-Z0-9_]*;
+PLUS: '+';
+MINUS: '-';
+MUL: '*';
+DIV: '/';
 
-// Starting point for the program
-program: decl_list function_list main EOF;
-
-// Declarations
-decl_list: (decl Semicolon)*;
-decl: var_decl | const_decl;
-
-// Variable declaration
-var_decl: Variable ID Colon type;
-
-// Constant declaration
-const_decl: Constant ID Colon type Assign expr;
-
-// Functions
-function_list: function*;
-function: type ID LBR parameter_list? RBR Is decl_list Begin statement_block Return LBR expr? RBR Semicolon End;
-
-// Types
-type: IntType | BoolType | VoidType;
-
-// Parameters
-parameter_list: nemp_parameter_list?;
-nemp_parameter_list: ID Colon type (Comma ID Colon type)*;
-
-// Main program block
-main: Main Begin decl_list statement_block End;
-
-// Statements
-statement_block: (statement)*;
-statement: assign
-         | ID LBR arg_list? RBR Semicolon       // function call
-         | Begin statement_block End
-         | If condition Begin statement_block End (Else Begin statement_block End)?
-         | While condition Begin statement_block End
-         | Return LBR expr? RBR Semicolon
-         | Skip Semicolon;
-
-// New assignment rule
-assign: ID Assign expr Semicolon;
-
-// Expressions
-expr: expr binary_arith_op expr
-    | LBR expr RBR
-    | ID LBR arg_list? RBR
-    | frag;
-
-binary_arith_op: Plus | Minus | '*' | '%';
-
-frag: ID
-    | Minus ID
-    | Number
-    | True
-    | False
-    | LBR expr RBR;
-
-// Conditions
-condition: Neg condition
-         | LBR condition RBR
-         | expr comp_op expr
-         | condition (Or | And) condition;
-
-comp_op: Equals | NotEquals | Less | LessOrEquals | Greater | GreaterOrEquals;
-
-// Arguments
-arg_list: nemp_arg_list?;
-nemp_arg_list: expr (Comma expr)*;
+ID: [a-zA-Z_][a-zA-Z0-9_]*;
+NUMBER: [0-9]+;
 
 // Comments and whitespace
 Comment: '/*' (Comment | ~[*/])*? '*/' -> skip;
 CommentLine: '//' ~[\n\r]* -> skip;
 WS: [ \t\n\r]+ -> skip;
+
+program: (function_decl | main_block)+;
+
+function_decl: type ID LPAREN param_list? RPAREN IS decl_list BEGIN stmt_list (RETURN expr? SEMICOLON)? END;
+
+main_block: MAIN BEGIN decl_list stmt_list END;
+
+type: INTEGER | VOID;
+
+param_list: param (COMMA param)*;
+param: ID COLON type;
+
+decl_list: (var_decl)*;
+var_decl: VARIABLE ID COLON type SEMICOLON;
+
+stmt_list: (stmt)*;
+stmt: assign_stmt
+    | func_call_stmt
+    | return_stmt
+    | if_stmt
+    | while_stmt
+    | block;
+
+block: BEGIN stmt_list END;
+
+if_stmt: IF LPAREN condition RPAREN stmt (ELSE stmt)?;
+
+while_stmt: WHILE LPAREN condition RPAREN block;
+
+condition: expr rel_op expr;
+
+rel_op: '>' | '<' | '>=' | '<=' | '=' | '!=';
+
+assign_stmt: ID ASSIGN expr SEMICOLON;
+
+func_call_stmt: (ID ASSIGN)? ID LPAREN arg_list? RPAREN SEMICOLON;
+
+return_stmt: RETURN expr? SEMICOLON;
+
+arg_list: expr (COMMA expr)*;
+
+expr: expr (PLUS | MINUS | MUL | DIV) expr
+    | LPAREN expr RPAREN
+    | ID
+    | NUMBER;
