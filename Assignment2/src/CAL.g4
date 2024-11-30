@@ -1,5 +1,6 @@
 grammar CAL;
 
+// Fragments for case-insensitive matching of letters
 fragment A: 'a' | 'A';
 fragment B: 'b' | 'B';
 fragment C: 'c' | 'C';
@@ -27,6 +28,7 @@ fragment X: 'x' | 'X';
 fragment Y: 'y' | 'Y';
 fragment Z: 'z';
 
+// Keywords
 RETURN: R E T U R N;
 MAIN: M A I N;
 VARIABLE: V A R I A B L E;
@@ -39,6 +41,7 @@ WHILE: W H I L E;
 IF: I F;
 ELSE: E L S E;
 
+// Operators and punctuation
 ASSIGN: ':=';
 COLON: ':';
 SEMICOLON: ';';
@@ -51,6 +54,7 @@ MINUS: '-';
 MUL: '*';
 DIV: '/';
 
+// Identifiers and numbers
 ID: [a-zA-Z_][a-zA-Z0-9_]*;
 NUMBER: [0-9]+;
 
@@ -59,6 +63,7 @@ Comment: '/*' (Comment | ~[*/])*? '*/' -> skip;
 CommentLine: '//' ~[\n\r]* -> skip;
 WS: [ \t\n\r]+ -> skip;
 
+// Grammar rules
 program: (function_decl | main_block)+;
 
 function_decl: type ID LPAREN param_list? RPAREN IS decl_list BEGIN stmt_list (RETURN expr? SEMICOLON)? END;
