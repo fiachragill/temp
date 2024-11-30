@@ -45,19 +45,9 @@ public class TACGeneratorVisitor extends CALBaseVisitor<String> {
 
     @Override
     public String visitFunc_call_stmt(CALParser.Func_call_stmtContext ctx) {
-        if (ctx.ID().size() == 2) { // Function call with assignment
+        if (ctx.ID().size() == 2) {
             String resultVar = ctx.ID(0).getText();
             String funcName = ctx.ID(1).getText();
-            if (ctx.arg_list() != null) {
-                for (CALParser.ExprContext exprCtx : ctx.arg_list().expr()) {
-                    String arg = visit(exprCtx);
-                    tacGenerator.addInstruction("  param " + arg); // Handle function arguments
-                }
-            }
-            int argCount = ctx.arg_list() != null ? ctx.arg_list().expr().size() : 0;
-            tacGenerator.addInstruction("  " + resultVar + " = call " + funcName + ", " + argCount);
-        } else { // Function call without assignment
-            String funcName = ctx.ID(0).getText();
             if (ctx.arg_list() != null) {
                 for (CALParser.ExprContext exprCtx : ctx.arg_list().expr()) {
                     String arg = visit(exprCtx);
@@ -65,7 +55,10 @@ public class TACGeneratorVisitor extends CALBaseVisitor<String> {
                 }
             }
             int argCount = ctx.arg_list() != null ? ctx.arg_list().expr().size() : 0;
-            tacGenerator.addInstruction("  call " + funcName + ", " + argCount);
+            tacGenerator.addInstruction("  " + resultVar + " = call " + funcName + ", " + argCount);
+        } else {
+            String funcName = ctx.ID(0).getText();
+            tacGenerator.addInstruction("  call " + funcName + ", " + (ctx.arg_list() != null ? ctx.arg_list().expr().size() : 0));
         }
         return null;
     }
@@ -76,8 +69,7 @@ public class TACGeneratorVisitor extends CALBaseVisitor<String> {
         currentFunction = functionName;
         tacGenerator.addInstruction(functionName + ":");
         visit(ctx.decl_list());
-        visit(ctx.stmt_list()); // Process all statements, including return_stmt
-        currentFunction = "";
+        visit(ctx.stmt_list());
         return null;
     }
 
@@ -103,8 +95,10 @@ public class TACGeneratorVisitor extends CALBaseVisitor<String> {
             String right = visit(ctx.expr(1));
             String op = ctx.getChild(1).getText();
             return left + " " + op + " " + right;
+        } else if (ctx.expr().size() == 1) {
+            // For parenthesized expressions
+            return visit(ctx.expr(0));
         }
         return null;
     }
 }
-

@@ -1,6 +1,6 @@
 test_fn:
   p = 2
-  return null
+  return p
 main:
   i = x
   param i
