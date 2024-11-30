@@ -5,10 +5,18 @@ begin
 	return (p) ;
 end
 
+integer new_fn (y: integer) is
+variable q : integer;
+begin
+	q := 3;
+	return (q) ;
+end
+
 main
 begin
 	variable i : integer;
  	variable x : integer;
 	i := x;
 	x := test_fn(i);
+	x := new_fn(x);
 end

@@ -1,8 +1,13 @@
 test_fn:
   p = 2
   return p
+new_fn:
+  q = 3
+  return q
 main:
   i = x
   param i
   x = call test_fn, 1
+  param x
+  x = call new_fn, 1
   call _exit, 0
